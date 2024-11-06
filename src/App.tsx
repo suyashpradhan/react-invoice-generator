@@ -75,7 +75,7 @@ function App() {
                     {/* Receiver's Form */}
                     <h2 className="text-xl font-semibold mb-4">Bill To</h2>
                     <div className="mb-8">
-                        <form className="space-y-4">
+                        <form className="space-y-4 grid grid-cols-1">
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                                     Name
@@ -88,37 +88,40 @@ function App() {
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                                 />
                             </div>
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Email
-                                </label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-                                />
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Email
+                                    </label>
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                                    />
+                                </div>
+                                <div className="grid-cols-4">
+                                    <label htmlFor="due_date"
+                                           className="block text-sm font-medium text-gray-700 mb-1">
+                                        Due Date
+                                    </label>
+                                    <input
+                                        id="due_date"
+                                        type="date"
+                                        value={date}
+                                        onChange={(e) => setDate(e.target.value)}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                                    />
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="due_date" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Due Date
-                                </label>
-                                <input
-                                    id="due_date"
-                                    type="date"
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
-                                />
-                            </div>
+
                             <div>
                                 <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
                                     Address
                                 </label>
-                                <input
+                                <textarea
                                     id="address"
-                                    type="text"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
@@ -159,9 +162,8 @@ function App() {
                                 <label htmlFor="senderAddress" className="block text-sm font-medium text-gray-700 mb-1">
                                     Address
                                 </label>
-                                <input
+                                <textarea
                                     id="senderAddress"
-                                    type="text"
                                     value={senderAddress}
                                     onChange={(e) => setSenderAddress(e.target.value)}
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
@@ -224,7 +226,7 @@ function App() {
                             </div>
                         </div>
                         <button
-                            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                            className="mt-4 text-blue-500 font-semibold underline hover:text-blue-600"
                             onClick={handleItems}
                         >
                             Add Item
@@ -340,7 +342,8 @@ function App() {
                             />
                         </div>
                         <p>
-                            <span className="font-semibold">Sub Total: {subtotal.toFixed(2)} </span> {/* Calculate Sub Total */}
+                            <span
+                                className="font-semibold">Sub Total: {subtotal.toFixed(2)} </span> {/* Calculate Sub Total */}
                         </p>
                         <p>
                             <span className="font-semibold">Total: {total.toFixed(2)} </span> {/* Calculate Total */}
