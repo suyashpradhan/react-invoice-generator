@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 interface Items {
@@ -23,8 +23,27 @@ function App() {
     const [itemQuantity, setItemQuantity] = React.useState('');
     const [items, setItems] = React.useState<Items[]>([]);
 
-    const [subtotal, setSubtotal] = React.useState('');
-    const [total, setTotal] = React.useState('');
+    const [discount, setDiscount] = useState(0)
+    const [tax, setTax] = useState(0)
+
+    const [subtotal, setSubtotal] = React.useState(0);
+    const [total, setTotal] = React.useState(0);
+
+    // Calculate the subtotal whenever items are added or removed
+    useEffect(() => {
+        const calculatedSubtotal = items.reduce(
+            (acc, item) => acc + Number(item.itemPrice) * Number(item.itemQuantity),
+            0
+        );
+        setSubtotal(calculatedSubtotal);
+
+        // Calculate total based on discount and tax
+        const discountAmount = (calculatedSubtotal * discount) / 100;
+        const taxAmount = ((calculatedSubtotal - discountAmount) * tax) / 100;
+        const calculatedTotal = calculatedSubtotal - discountAmount + taxAmount;
+
+        setTotal(calculatedTotal);
+    }, [items, discount, tax]);
 
     const itemTotal = Number(itemPrice) * Number(itemQuantity);
 
@@ -305,7 +324,7 @@ function App() {
                             <input
                                 id="tax"
                                 type="number"
-                                onChange={(e) => console.log(e.target.value)}
+                                onChange={(e) => setTax(Number(e.target.value))}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                             />
                         </div>
@@ -316,15 +335,15 @@ function App() {
                             <input
                                 id="discount"
                                 type="number"
-                                onChange={(e) => console.log(e.target.value)}
+                                onChange={(e) => setDiscount(Number(e.target.value))}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                             />
                         </div>
                         <p>
-                            <span className="font-semibold">Sub Total:</span> {/* Calculate Sub Total */}
+                            <span className="font-semibold">Sub Total: {subtotal.toFixed(2)} </span> {/* Calculate Sub Total */}
                         </p>
                         <p>
-                            <span className="font-semibold">Total:</span> {/* Calculate Total */}
+                            <span className="font-semibold">Total: {total.toFixed(2)} </span> {/* Calculate Total */}
                         </p>
                     </div>
                 </div>
